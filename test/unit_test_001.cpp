@@ -1,9 +1,9 @@
 //
 //    FILE: unit_test_001.cpp
 //  AUTHOR: Rob Tillaart
-//    DATE: 2023-09-25
-// PURPOSE: unit tests for the ACD10 library
-//     URL: https://github.com/RobTillaart/ACD10
+//    DATE: 2024-10-01
+// PURPOSE: unit tests for the Vibration library
+//     URL: https://github.com/RobTillaart/Vibration
 //          https://github.com/Arduino-CI/arduino_ci/blob/master/REFERENCE.md
 //
 
@@ -25,12 +25,12 @@
 
 
 #include "Arduino.h"
-#include "ACD10.h"
+#include "Vibration.h"
 
 
 unittest_setup()
 {
-  fprintf(stderr, "ACD10_LIB_VERSION: %s\n", (char *) ACD10_LIB_VERSION);
+  fprintf(stderr, "VIBRATION_LIB_VERSION: %s\n", (char *) VIBRATION_LIB_VERSION);
 }
 
 
@@ -39,22 +39,11 @@ unittest_teardown()
 }
 
 
-unittest(test_constants)
-{
-  assertEqual(ACD10_DEFAULT_ADDRESS, 0x2A);
-}
-
-
 unittest(test_constructor)
 {
-  ACD10 acd;
+  VibrationSensor vib(A2);
 
-  assertEqual(acd.getAddress(), ACD10_DEFAULT_ADDRESS);
-  assertEqual(acd.getRequestTime(), 80);
-  assertEqual(acd.getLastError(), 0);
-  assertEqual(acd.lastRead(), 0);
-  assertEqual(acd.getCO2Concentration(), 0);
-  assertEqual(acd.getTemperature(), 0);
+  assertTrue(vib.begin());
 }
 
 

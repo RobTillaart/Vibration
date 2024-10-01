@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - initial release
 - rename + add functions
 - rewrite functions to duration.
+- add minimal unit test
+
 
 ## [0.1.0] - 2024-04-26
 - initial version
