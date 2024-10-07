@@ -78,8 +78,8 @@ unittest(test_defaults)
   assertEqual(0, vib.sum());
   
     //  divide by zero.
-  asserttrue(isnan(vib.zeroCount()));
-  asserttrue(isnan(vib.sampleCount()));
+  assertTrue(isnan(vib.zeroCount()));
+  assertTrue(isnan(vib.sampleCount()));
   assertNAN(vib.zeroCount());
   assertNAN(vib.sampleCount());
 }
