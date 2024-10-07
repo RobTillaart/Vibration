@@ -13,20 +13,24 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println();
-  Serial.println(__FILE__);
+  Serial.print(__FILE__);
   Serial.print("VIBRATION_LIB_VERSION: ");
   Serial.println(VIBRATION_LIB_VERSION);
-
-  Serial.println("done...\n");
+  Serial.println();
 }
 
 
 void loop()
 {
   //  measure for one second
+  VBS.measure(1000);
   //  percentage with one decimal
-  Serial.print("ZERO: \t");
-  Serial.println(VBS.zeroCount(1000), 1);
+  Serial.print("Samples: \t");
+  Serial.print(VBS.sampleCount());
+  Serial.print("\t zero: \t");
+  Serial.print(VBS.zeroCount(), 1);
+  Serial.print(" %");
+  Serial.println();
 }
 
 

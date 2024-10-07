@@ -39,6 +39,19 @@ The different functions of the library might fit more (or less) to your needs.
 If functionality is missing, please open an issue.
 
 
+### 0.2.0 Breaking change
+
+0.2.0 has refactored the interface to improve performance. 
+Instead of making measurements per function, now one calls **measure()** to make the 
+measurements and update internal variables which can be read with getter functions. 
+
+Another advantage is that the functions return values from the same set of measurements.
+This might be important for some applications. 
+
+Finally, the **measure()** function allows to reset the internal variables or not.
+This allows for more cummulative measurements.
+
+
 ### Interrupts
 
 The library does not use interrupts to count the pulses of the vibration
@@ -69,18 +82,24 @@ Arduino UNO.
 - **VibrationSensor(uint8_t analogPin)** constructor, set the analogPin to use.
 - **bool begin()** place holder for now.
 
+### NoiseLevel
+
+- **void setNoiseLevel(uint16_t noise = 10)** set the noise level for the zero count
+function. Default value is 10.
+- **uint16_t getNoiseLevel()** returns the current noise level used.
+
 ### Measurements
 
-- **float zeroCount(uint32_t duration, uint16_t noise = 10)** read the sensor, 
-count the times the value is zero.
-Returns the percentage reads as below or equal to noise level.
-This noise level has a default value of 10.
-- **uint16_t average(uint32_t duration)** reads the sensor for a defined duration,
-but at least once. Returns the average of multiple reads.
-- **uint16_t poll(uint32_t duration)** polls the sensor for a given duration
-(in millis), with a minimum of one sample. 
-The function returns the maximum value sampled.
-Note this code is blocking for at least duration milliseconds.
+- **uint16_t measure(uint32_t duration, bool reset = true)** makes analogReads for
+duration milliseconds, at least 1. 
+If the parameter reset is true the internal variables are reset to 0.
+Returns the number of samples made.
+Note this call is blocking for at least duration milliseconds.
+- **float zeroCount()** returns the percentage reads as below or equal to noise level. 
+This noise level has a default value of 10, and can be set with **setNoiseLevel()**.
+- **uint16_t sampleCount()** returns the amount of samples made by **measure()**.
+- **uint16_t average()** returns the average of the measurement since reset.
+- **uint16_t poll()** returns the maximum value of the measurement since reset.
 
 
 ## Future
@@ -95,18 +114,14 @@ Note this code is blocking for at least duration milliseconds.
 
 #### Could
 
-- **bool isVibrating(uint8_t samples)** ?
 - use (fast) external ADC.
   - https://github.com/RobTillaart/ADS1x15
   - https://github.com/RobTillaart/MCPADC
 - add delay between average reads (option, blocks even longer).
-- default values parameters?
+  - **measureDelay()**
 - investigate interrupts.
   - platform specific probably
 - investigate the acquisition time ==> differs per board.
-- refactor interface - 0.2.0
-  - measure(duration);
-  - result functions.
 
 #### Wont
 

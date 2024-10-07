@@ -13,17 +13,23 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println();
-  Serial.println(__FILE__);
+  Serial.print(__FILE__);
   Serial.print("VIBRATION_LIB_VERSION: ");
   Serial.println(VIBRATION_LIB_VERSION);
-
-  Serial.println("done...\n");
+  Serial.println();
 }
 
 
 void loop()
 {
-  Serial.println(VBS.poll(1000));
+  //  measure for one second
+  VBS.measure(1000);
+  //  max value
+  Serial.print("Samples: \t");
+  Serial.print(VBS.sampleCount());
+  Serial.print("\t max: \t");
+  Serial.print(VBS.poll());
+  Serial.println();
 }
 
 
