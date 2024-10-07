@@ -94,6 +94,12 @@ public:
   }
 
 
+  uint16_t sum()
+  {
+    return _sum;
+  }
+
+
 protected:
   uint8_t  _analogPin;
   uint16_t _noiseLevel;

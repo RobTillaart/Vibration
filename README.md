@@ -24,7 +24,7 @@ Goal is to detect if there is movement or tilt.
 Vibration sensors, a.k.a. tilt switches can work in different ways so they are 
 meant for different applications.
 Some have a conducting ball that has a home position and when vibrations occur
-or when tilted it will move out of this position, connecting a switch.
+or when tilted, the ball will move out of this home position, connecting a switch.
 If the sensor stays tilted the switch can stay connected for longer times. 
 Some of the sensors e.g. SW-18010P, have a spring connected to the ball that forces
 the ball to the home position if there is no vibration. Even in a tilted position.
@@ -37,6 +37,30 @@ This allows measuring a first order (relative) magnitude of a vibration.
 
 The different functions of the library might fit more (or less) to your needs.
 If functionality is missing, please open an issue.
+
+
+### Schema
+
+Simplified schema how to connect.
+
+```
+  VCC e.g. 5V ----0 vibration sensor 0----[ PULL DOWN R ]----+--- GND
+                                     |                       |
+                                     |                       |
+  analog input MCU <-----------------+----[ CAPACITOR ]------+
+```
+
+When the vibration sensor switches on the capacitor will load with the pulses
+and will loose its charge when not connected.
+
+By measuring the remaining voltage one gets an indication of the amount of
+vibration without continuous measurements with the MCU.
+
+If one leaves out the capacitor, one still can count the average and zero percentage
+to get a first order indication.
+
+TODO: define valid values for R and C.  
+(this will relate to the sample frequency too)
 
 
 ### 0.2.0 Breaking change
@@ -98,8 +122,9 @@ Note this call is blocking for at least duration milliseconds.
 - **float zeroCount()** returns the percentage reads as below or equal to noise level. 
 This noise level has a default value of 10, and can be set with **setNoiseLevel()**.
 - **uint16_t sampleCount()** returns the amount of samples made by **measure()**.
-- **uint16_t average()** returns the average of the measurement since reset.
-- **uint16_t poll()** returns the maximum value of the measurement since reset.
+- **uint16_t average()** returns the average of the measurements since reset.
+- **uint16_t poll()** returns the maximum value of the measurements since reset.
+- **uint16_t sum()** returns the sum of the measurements since reset.
 
 
 ## Future
@@ -108,6 +133,7 @@ This noise level has a default value of 10, and can be set with **setNoiseLevel(
 #### Must
 
 - improve documentation
+- build test setup with R and C.
 
 #### Should
 
