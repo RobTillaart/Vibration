@@ -72,22 +72,27 @@ measurements and update internal variables which can be read with getter functio
 Another advantage is that the functions return values from the same set of measurements.
 This might be important for some applications. 
 
-Finally, the **measure()** function allows to reset the internal variables or not.
+The duration parameter is now microseconds, which allows for smaller intervals of
+polling. This can be useful for very fast ADC's.
+
+The **measure()** function allows to reset the internal variables or not.
 This allows for more cummulative measurements.
+
+The **poll()** function has been replaced by a more descriptive **maxValue()**.
 
 
 ### Interrupts
 
 The library does not use interrupts to count the pulses of the vibration
  / tilt sensor. 
- For now it supports only polling to  see if there is any vibration. 
+For now it supports only polling to  see if there is any vibration. 
 As vibrations are relative long in CPU clock cycles, polling a few times
 per second worked well for my needs.
 
 
 ### Related
 
-TODO
+- https://github.com/RobTillaart/printHelpers - for large values of sum()
 
 
 ### Tested
@@ -114,17 +119,23 @@ function. Default value is 10.
 
 ### Measurements
 
-- **uint16_t measure(uint32_t duration, bool reset = true)** makes analogReads for
-duration milliseconds, at least 1. 
+- **uint32_t measure(uint32_t duration, bool reset = true)** makes analogReads for
+duration microseconds, at least 1. 
 If the parameter reset is true the internal variables are reset to 0.
 Returns the number of samples made.
-Note this call is blocking for at least duration milliseconds.
+Note this call is blocking for at least duration microseconds.
 - **float zeroCount()** returns the percentage reads as below or equal to noise level. 
 This noise level has a default value of 10, and can be set with **setNoiseLevel()**.
-- **uint16_t sampleCount()** returns the amount of samples made by **measure()**.
-- **uint16_t average()** returns the average of the measurements since reset.
-- **uint16_t poll()** returns the maximum value of the measurements since reset.
-- **uint16_t sum()** returns the sum of the measurements since reset.
+Returns NAN when no measurements are made.
+- **uint32_t sampleCount()** returns the amount of samples made by **measure()** since
+the last reset.
+- **float average()** returns the average of the measurements since reset.
+Returns NAN when no measurements are made.
+- **uint16_t maxValue()** returns the maximum value of the measurements since reset.
+- **uint32_t sum()** returns the sum of the measurements since reset.
+
+Note: if the measure() call is never reset, the value of sampleCount(), sum() 
+and average() will wrap when overflow occurs. 
 
 
 ## Future
@@ -148,6 +159,7 @@ This noise level has a default value of 10, and can be set with **setNoiseLevel(
 - investigate interrupts.
   - platform specific probably
 - investigate the acquisition time ==> differs per board.
+- need for separate **reset()**? 
 
 #### Wont
 

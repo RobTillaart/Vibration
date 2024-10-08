@@ -46,7 +46,7 @@ public:
   }
 
 
-  uint16_t measure(uint32_t duration, bool reset = true)
+  uint32_t measure(uint32_t duration, bool reset = true)
   {
     if (reset)
     {
@@ -55,7 +55,7 @@ public:
       _zeroCount = 0;
       _sum = 0;
     }
-    uint32_t start = millis();
+    uint32_t start = micros();
     do
     {
       uint16_t value = analogRead(_analogPin);
@@ -64,7 +64,7 @@ public:
       if (value > _maxValue) _maxValue = value;
       _samples++;
     }
-    while ((millis() - start) < duration);
+    while ((micros() - start) < duration);
     return _samples;
   }
 
@@ -75,7 +75,7 @@ public:
   }
 
 
-  uint16_t sampleCount()
+  uint32_t sampleCount()
   {
     return _samples;
   }
@@ -88,13 +88,13 @@ public:
   }
 
 
-  uint16_t poll()
+  uint16_t maxValue()
   {
     return _maxValue;
   }
 
 
-  uint16_t sum()
+  uint32_t sum()
   {
     return _sum;
   }
@@ -104,10 +104,10 @@ protected:
   uint8_t  _analogPin;
   uint16_t _noiseLevel;
 
-  uint16_t _samples;
+  uint32_t _samples;
   uint16_t _maxValue;
   uint16_t _zeroCount;
-  float    _sum;
+  uint32_t _sum;
 };
 
 

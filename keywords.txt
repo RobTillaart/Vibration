@@ -14,7 +14,8 @@ measure	KEYWORD2
 zeroCount	KEYWORD2
 sampleCount	KEYWORD2
 average	KEYWORD2
-poll	KEYWORD2
+maxValue	KEYWORD2
+sum	KEYWORD2
 
 
 # Constants (LITERAL1)

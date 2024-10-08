@@ -74,7 +74,7 @@ unittest(test_defaults)
   //  raw data.
   assertEqual(10, vib.getNoiseLevel());
   assertEqual(0, vib.sampleCount());
-  assertEqual(0, vib.poll());
+  assertEqual(0, vib.maxValue());
   assertEqual(0, vib.sum());
   
     //  divide by zero.

@@ -13,7 +13,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println();
-  Serial.print(__FILE__);
+  Serial.println(__FILE__);
   Serial.print("VIBRATION_LIB_VERSION: ");
   Serial.println(VIBRATION_LIB_VERSION);
   Serial.println();
@@ -23,7 +23,7 @@ void setup()
 void loop()
 {
   //  measure for one second
-  VBS.measure(1000);
+  VBS.measure(1000000);
   //  average with one decimal
   Serial.print("Samples: \t");
   Serial.print(VBS.sampleCount());

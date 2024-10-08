@@ -1,5 +1,5 @@
 //
-//    FILE: Vibration_poll.ino
+//    FILE: Vibration_maxValue.ino
 //  AUTHOR: Rob Tillaart
 // PURPOSE: demo
 //     URL: https://github.com/RobTillaart/Vibration
@@ -13,7 +13,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println();
-  Serial.print(__FILE__);
+  Serial.println(__FILE__);
   Serial.print("VIBRATION_LIB_VERSION: ");
   Serial.println(VIBRATION_LIB_VERSION);
   Serial.println();
@@ -23,12 +23,12 @@ void setup()
 void loop()
 {
   //  measure for one second
-  VBS.measure(1000);
+  VBS.measure(1000000);
   //  max value
   Serial.print("Samples: \t");
   Serial.print(VBS.sampleCount());
   Serial.print("\t max: \t");
-  Serial.print(VBS.poll());
+  Serial.print(VBS.maxValue());
   Serial.println();
 }
 
