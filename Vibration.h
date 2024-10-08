@@ -71,7 +71,7 @@ public:
 
   float zeroCount()
   {
-    return 100.0 * _zeroCount / _samples;
+    return (100.0 * _zeroCount) / _samples;
   }
 
 
@@ -84,7 +84,7 @@ public:
   float average()
   {
     if (_samples == 1) return _sum;
-    return _sum / _samples;
+    return (1.0 * _sum) / _samples;
   }
 
 
